@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Создайте конструктор Book</title>
+</head>
+<body>
+	<script>
+function Book(title, pubYear, price) {
+this.title = title;
+this.pubYear = pubYear;
+this.price = price;
+}
+var book1 = new Book("Путешественник", 1956 , 180);
+var book2 = new Book("Моряк", 1995 , 250);
+Book.prototype.show = function(){
+document.write(this.title);
+document.write(this.pubYear);
+document.write(this.price);
+}
+book1.show();
+
+
+</script>
+	
+</body>
+</html>

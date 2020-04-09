@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Дан исходный код:var a = [5, 12];</title>
+</head>
+<body>
+	<script>
+console.log("учебники");
+var book1 = {};
+book1.title = 'урoки по web';
+book1.pubYear = ' 2025';
+book1.price = ' 148 $';
+book1.show = function () {
+console.log(book1.title + " - " + book1.price);}
+function showBook() {
+console.log(this.title + " - " + this);}
+book1.show();
+var book2 = {
+title: 'танки всему голова',
+pubYear: ' 3020 ',
+price: ' 228 $'}
+book2.show = function () {
+console.log(book2.title + " - " + book2.price); }
+function showBook() {
+console.log(this.title + " - " + this); }
+book2.show();
+for (var o in book1) {
+Console.log(o + "-" + book1[o]);}
+for (var o in book2) {
+console.log(o + "-" + book2[o]);}
+</script>
+	
+</body>
+</html>

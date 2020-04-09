@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+var text = 'Мы знаем, что монохромный цвет - это градации серого';
+var txt = 'хром';
+var word;
+
+var part = text.indexOf(txt);
+console.log(part);
+var firstSpace = text.lastIndexOf(' ', part);
+console.log(firstSpace);
+var nextSpace = text.indexOf(' ', part);
+word = text.slice(firstSpace, nextSpace);
+console.log(word);
+</script>
+</body>
+</html>

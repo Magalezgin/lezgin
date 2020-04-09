@@ -1,0 +1,220 @@
+
+
+
+
+
+
+П-17-43К Учебная практика по web-программированию и интернет-технологиям
+Учебная практика
+
+
+
+
+
+
+
+Срок сдачи: 21 мар., 21:00
+Задания на 20.03.20
+
+5 баллов
+
+
+ 
+Денис Попов
+20 мар. (Изменено: 20 мар.)
+Задание. Разработать калькулятор расчета заработной платы на VueJS.
+Интерфейс калькулятора:
+- поле для ввода оклада 
+- поле для ввода премии 
+- поле для ввода районного коэффициента (если есть), % 
+- поле для ввода количества рабочих дней в месяце 
+- поле для ввода количества отработанных дней в месяце
+- поле для вывода полной зарплаты 
+- поле для вывода НДФЛ 13% 
+- поле для вывода зарплаты на руки
+- кнопка для расчета ЗП
+- должно выводится предупреждения в виде сообщения рядом с полем ввода, если обязательное поля не заполнено
+Формулы для расчета заработной платы в 2020 году:
+1) Полная ЗП = ОКЛАД * Р.КОЭФФ * ОТР ДНИ / РАБ ДНИ + ПРЕМИЯ
+2) НДФЛ = Полная ЗП * 0.13
+3) Зарплата на руки = Полная ЗП - НДФЛ
+Примечание:
+Создайте привлекательный дизайн интерфейса калькулятора.
+Работы написанные без использования фреймворка VueJS не принимаются.
+
+
+
+
+
+
+Комментарии
+
+
+Добавьте комментарий…
+
+
+Моя работа
+
+Пропущен срок сдачи
+
+
+
+
+
+index.html
+HTML
+
+
+
+Добавить или создать
+
+
+Сдать
+
+1 личный комментарий
+
+Денис Попов21 мар.
+
+Калькулятор не работает
+
+Добавить личный комментарий…
+
+
+
+
+
+Файл "index.html" добавлен
+
+
+
+
+
+
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ES6</title>
+    <style type="text/css">
+        button {
+            margin-top: 10px;
+            color: black;
+            background-color: white;
+        }
+        
+        input {
+            color: black;
+        }
+        
+        body {
+            background-color: white;
+        }
+        
+        form {
+            background-color: gray;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <h1>Калькулятор</h1>
+    <form id="myForm" name="myForm">
+        <fieldset>
+            <div id="app">
+                <p style="white-space: pre-line;">{{error}}</p>
+                <legend> Форма </legend>
+                <div>
+                    <label for="txt1"> Оклад: </label>
+                    <input v-model.number="oklad" type="number" name="Оклад" id="txt1" style="margin-left: 188.5px;">
+                </div>
+                <div>
+                    <label for="txt2"> Премия: </label>
+                    <input v-model.number="premia" type="number" name="Премия" id="txt2" style="margin-left: 178px;">
+                </div>
+                <div>
+                    <label for="txt3"> Районный коэффицент: </label>
+                    <input v-model.number="rkof" type="number" name="Районный коэффицент" id="txt3" style="margin-left: 75.5px;">
+                </div>
+                <div>
+                    <label for="txt4"> Количество рабочих дней: </label>
+                    <input v-model.number="rabdney" type="number" name="Кол-во рабочих дней" id="txt4" style="margin-left: 55.5px;">
+                </div>
+                <div>
+                    <label for="txt5"> Количество отработанных дней: </label>
+                    <input v-model.number="otrabdney" type="number" name="Кол-во отработанных дней" id="txt5" style="margin-left: 15px;">
+                </div>
+                <div>
+                    <button type="button" v-on:click="getAnswer">Рассчитать</button>
+                </div>
+                <div>
+                    <label for="txt6"> Полная зарплата: </label>
+                    <input v-model="polnayazp" type="text" name="p1" disabled style="margin-left: 118px;">
+                </div>
+                <div>
+                    <label for="txt7"> НДФЛ: </label>
+                    <input v-model="ndfl" type="text" name="p2" disabled style="margin-left: 186.5px;">
+                </div>
+                <div>
+                    <label for="txt8"> Зарплата на руки: </label>
+                    <input v-model="zpnaruki" type="text" name="p3" disabled style="margin-left: 115px;">
+                </div>
+            </div>
+
+
+        </fieldset>
+    </form>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {
+                oklad: 0,
+                premia: 0,
+                rkof: 0,
+                rabdney: 0,
+                otrabdney: 0,
+                polnayazp: 0,
+                ndfl: 0,
+                zpnaruki: 0,
+                error: ""
+            },
+            methods: {
+                getAnswer: function() {
+                    if (!this.checkForm() && this.rabdney != 0) {
+                        this.error = ""
+                        this.polnayazp = this.oklad * this.rkof * this.otrabdney / this.rabdney + this.premia;
+                        this.ndfl = this.polnayazp * 0.13;
+                        this.zpnaruki = this.polnayazp - this.ndfl;
+                    }
+
+                },
+                checkForm: function() {
+                    this.error = ""
+                    el = document.forms.myForm.elements;
+                    var empty = false;
+                    for (var i = 0; i < el.length; i++) {
+                        if (el[i].type === "number" && el[i].value === "") {
+                            el[i].style.borderColor = "red";
+                            this.error += "Нужно заполнить обязательное поле ''" + el[i].name + "'\n"
+                            empty = true;
+                        } else {
+                            el[i].style.border = "";
+                        }
+                    }
+                    return empty;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
+
+
+index.html
+
+
+Открыт файл "index.html"

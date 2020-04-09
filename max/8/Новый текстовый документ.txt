@@ -1,0 +1,96 @@
+12
+SELECT lezgin_user.user_id, lezgin_user.lastname, lezgin_user.firstname
+FROM lezgin_user
+Inner Join lezgin_student ON lezgin_student.user_id = lezgin_user.user_id
+Inner Join lezgin_gruppa ON lezgin_student.gruppa_id = lezgin_gruppa.gruppa_id
+Inner Join lezgin_graduate ON lezgin_graduate.gruppa_id = lezgin_gruppa.gruppa_id
+Inner Join lezgin_graduate_time ON lezgin_graduate_time.graduate_id = lezgin_graduate.graduate_id
+Inner Join lezgin_lesson_num ON lezgin_graduate_time.lesson_num_id = lezgin_lesson_num.lesson_num_id AND lezgin_lesson_num.time_lesson BETWEEN '10:30:00' AND '18:30:00' AND lezgin_user.gender_id='2'
+
+
+
+
+13
+SELECT lezgin_course.course_id, lezgin_course.name
+FROM lezgin_course
+Inner Join lezgin_graduate ON lezgin_graduate.course_id = lezgin_course.course_id
+Inner Join lezgin_graduate_time ON lezgin_graduate_time.graduate_id = lezgin_graduate_time.graduate_id
+Inner Join lezgin_lesson_num ON lezgin_graduate_time.lesson_num_id = lezgin_lesson_num.lesson_num_id AND lezgin_lesson_num.time_lesson BETWEEN '12:30:00' AND '18:30:00'
+
+
+14
+SELECT lezgin_user.user_id, lezgin_user.lastname, lezgin_user.firstname
+FROM lezgin_user
+Inner Join lezgin_student ON lezgin_student.user_id = lezgin_user.user_id
+Inner Join lezgin_gruppa ON lezgin_student.gruppa_id = lezgin_gruppa.gruppa_id
+Inner Join lezgin_graduate ON lezgin_graduate.gruppa_id = lezgin_gruppa.gruppa_id
+Inner Join lezgin_graduate_time ON lezgin_graduate_time.graduate_id = lezgin_graduate.graduate_id
+Inner Join lezgin_day ON lezgin_graduate_time.day_id = lezgin_day.day_id AND lezgin_day.name = 'Пятница'
+
+
+
+15
+SELECT lezgin_day.*
+FROM lezgin_day
+LEFT JOIN lezgin_graduate_time ON (lezgin_day.day_id = lezgin_graduate_time.day_id)
+WHERE lezgin_graduate_time.graduate_time_id IS NULL
+
+
+16
+SELECT lezgin_special.name
+FROM lezgin_special
+Inner Join lezgin_course ON lezgin_course.special_id = lezgin_special.special_id
+Inner Join lezgin_graduate ON lezgin_graduate.course_id = lezgin_course.course_id
+Inner Join lezgin_graduate_time ON lezgin_graduate_time.graduate_id = lezgin_graduate.graduate_id
+Inner Join lezgin_day ON lezgin_graduate_time.day_id = lezgin_day.day_id AND lezgin_day.name = 'Вторник'
+
+
+17
+SELECT lezgin_user.user_id, lezgin_user.lastname, lezgin_user.firstname, lezgin_otdel.name
+FROM lezgin_user
+Inner Join lezgin_teacher ON lezgin_teacher.user_id = lezgin_user.user_id
+Inner Join lezgin_otdel ON lezgin_teacher.otdel_id = lezgin_otdel.otdel_id
+Inner Join lezgin_graduate ON lezgin_graduate.user_id = lezgin_teacher.user_id
+Inner Join lezgin_graduate_time ON lezgin_graduate_time.graduate_id = lezgin_graduate.graduate_id
+Inner Join lezgin_day ON lezgin_graduate_time.day_id = lezgin_day.day_id AND lezgin_day.name = 'Суббота'
+
+
+18
+SELECT lezgin_user.user_id, lezgin_user.lastname, lezgin_user.firstname, lezgin_gruppa.name, lezgin_special.name
+FROM lezgin_user
+INNER JOIN lezgin_student ON lezgin_student.user_id = lezgin_user.user_id
+INNER JOIN lezgin_gruppa ON lezgin_gruppa.gruppa_id = lezgin_student.gruppa_id
+INNER JOIN lezgin_special ON lezgin_special.special_id = lezgin_gruppa.special_id
+Inner JOIN lezgin_graduate ON lezgin_graduate.gruppa_id = lezgin_gruppa.gruppa_id
+INNER JOIN lezgin_course ON lezgin_graduate.course_id = lezgin_course.course_id AND lezgin_course.hours > '95'
+
+
+19
+SELECT lezgin_course.name, lezgin_course.hours, lezgin_special.name, lezgin_day.name
+FROM lezgin_otdel 
+INNER JOIN lezgin_special ON lezgin_special.otdel_id = lezgin_otdel.otdel_id
+INNER JOIN lezgin_course ON lezgin_course.special_id = lezgin_special.special_id
+INNER JOIN lezgin_graduate ON lezgin_graduate.course_id = lezgin_course.course_id
+INNER JOIN lezgin_graduate_time ON lezgin_graduate_time.graduate_id = lezgin_graduate.graduate_id
+INNER JOIN lezgin_day ON lezgin_graduate_time.day_id = lezgin_day.day_id 
+WHERE lezgin_otdel.otdel_id = '2' AND (lezgin_day.day_id = '3' OR lezgin_day.day_id = '5')
+
+
+20
+SELECT lezgin_otdel.name
+From lezgin_otdel
+Inner Join lezgin_teacher ON lezgin_teacher.otdel_id = lezgin_otdel.otdel_id
+Inner Join lezgin_graduate ON lezgin_graduate.user_id = lezgin_teacher.user_id
+Inner Join lezgin_graduate_time ON lezgin_graduate_time.graduate_id = lezgin_graduate_time.graduate_id
+Inner Join lezgin_day ON lezgin_graduate_time.day_id = lezgin_day.day_id AND lezgin_day.name = 'Вторник'
+Inner Join lezgin_lesson_num On lezgin_graduate_time.lesson_num_id = lezgin_lesson_num.lesson_num_id AND lezgin_lesson_num.time_lesson BETWEEN '09:00:00' AND '12:00:00'
+
+
+21
+SELECT
+ lezgin_day.name, COUNT(*)
+ FROM lezgin_course
+ INNER JOIN lezgin_graduate ON lezgin_graduate.course_id = lezgin_course.course_id
+ INNER JOIN lezgin_graduate_time ON lezgin_graduate_time.graduate_id= lezgin_graduate.graduate_id
+ INNER JOIN lezgin_day ON lezgin_graduate_time.day_id=lezgin_day.day_id
+ GROUP BY lezgin_day.day_id

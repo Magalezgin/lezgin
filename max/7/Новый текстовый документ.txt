@@ -1,0 +1,203 @@
+
+
+
+
+
+
+П-17-43К Учебная практика по web-программированию и интернет-технологиям
+Учебная практика
+
+
+
+
+
+
+
+Срок сдачи: 26 мар., 10:00
+Задание на 25.03.20
+
+4из 5
+4 балла (максимальная оценка: 5)
+
+
+ 
+Денис Попов
+24 мар. (Изменено: 25 мар.)
+В качестве ответа прикрепить файл с запросами на языке SQL.
+
+
+
+
+Zadanie_Mysql запросы.pdf
+PDF
+
+
+
+
+
+
+3 комментария от класса
+
+Батыр Оспанов25 мар.
+
+Что тут делать?
+
+Батыр Оспанов25 мар.
+
+Таблицв заполнить?
+
+Денис Попов25 мар.
+
+Написать запрос к созданной вчера базе данных на языке SQL
+
+Добавьте комментарий…
+
+
+Моя работа
+
+С оценкой
+
+
+
+
+
+запросы.txt
+Текст
+
+
+
+Добавить или создать
+
+
+Отправить еще раз
+
+3 личных комментария
+
+*The Lezgin Man* Курбанисмаилов27 мар.
+
+За 24 исправите оценку в журнале?
+
+*The Lezgin Man* Курбанисмаилов27 мар.
+
+Все увидел, извиняюсь)
+
+Денис Попов28 мар.
+
+В пятом задании надо было соединять таблицу graduate
+
+Добавить личный комментарий…
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1\↓
+SELECT lezgin_teacher.user_id, lezgin_user.lastname, lezgin_user.firstname, lezgin_user.gender_id, lezgin_otdel.otdel_id
+FROM lezgin_user
+Inner Join lezgin_teacher ON lezgin_teacher.user_id = lezgin_user.user_id
+Inner Join lezgin_otdel ON lezgin_teacher.otdel_id = lezgin_otdel.otdel_id and lezgin_otdel.name= 'Информационные системы'
+
+
+2\↓
+SELECT lezgin_user.user_id, lezgin_user.lastname, lezgin_user.firstname, lezgin_gruppa.name, lezgin_special.name 
+FROM lezgin_user 
+Inner Join lezgin_student ON lezgin_user.user_id = lezgin_student.user_id
+Inner Join lezgin_gruppa ON lezgin_student.gruppa_id = lezgin_gruppa.gruppa_id 
+Inner Join lezgin_special ON lezgin_gruppa.special_id = lezgin_special.special_id 
+Inner Join lezgin_otdel ON lezgin_special.otdel_id = lezgin_otdel.otdel_id 
+And lezgin_otdel.name= 'Информационные системы' 
+
+
+3\↓
+SELECT lezgin_course.course_id, lezgin_course.name, lezgin_course.hours, lezgin_special.name
+FROM lezgin_user
+Inner Join lezgin_special ON lezgin_course.special_id = lezgin_special.special_id
+Inner Join lezgin_otdel ON lezgin_special.otdel_id =
+lezgin_otdel.otdel_id
+And lezgin_otdel.otdel_id= '2'
+
+
+
+4\↓
+Select lezgin_gruppa.gruppa_id, lezgin_gruppa.name, lezgin_gruppa.date_begin, lezgin_gruppa.date_end
+FROM lezgin_gruppa
+Inner Join lezgin_special ON lezgin_gruppa.special_id = lezgin_special.special_id
+And lezgin_special.name = 'Информационные системы'
+
+
+5\↓
+SELECT lezgin_user.user_id,lezgin_user.lastname, lezgin_user.firstname, lezgin_gruppa.name
+FROM lezgin_user
+Inner Join lezgin_student ON lezgin_student.user_id = lezgin_user.user_id
+Inner Join lezgin_gruppa ON lezgin_student.gruppa_id = lezgin_gruppa.gruppa_id
+Inner Join lezgin_special ON lezgin_gruppa.special_id=lezgin_special.special_id
+Inner Join lezgin_course ON lezgin_course.special_id = lezgin_special.special_id
+And lezgin_course.name ='Мультимедиа технологии'
+
+
+6/↓
+SELECT lezgin_user.lastname, lezgin_user.firstname,lezgin_course.name, lezgin_course.hours
+From lezgin_user
+Inner Join lezgin_teacher ON lezgin_teacher.user_id = lezgin_user.user_id
+Inner Join lezgin_graduate ON lezgin_graduate.user_id= lezgin_teacher.user_id
+Inner Join lezgin_course ON lezgin_course.course_id = lezgin_graduate.course_id
+Inner Join lezgin_graduate_time ON lezgin_graduate_time.graduate_id= lezgin_graduate.graduate_id
+Inner Join lezgin_lesson_num ON lezgin_graduate_time.lesson_num_id = lezgin_lesson_num.lesson_num_id 
+AND time_lesson BETWEEN '08:30:00' AND '15:00:00'
+
+
+7\↓
+SELECT
+lezgin_otdel.name, COUNT(*) FROM lezgin_student
+INNER JOIN lezgin_gruppa
+ON lezgin_student.gruppa_id = lezgin_gruppa.gruppa_id
+INNER JOIN lezgin_special
+ON lezgin_gruppa.special_id = lezgin_special.special_id
+INNER JOIN lezgin_otdel ON lezgin_special.otdel_id = lezgin_otdel.otdel_id
+GROUP BY lezgin_otdel.otdel_id
+
+
+8\↓
+SELECT lezgin_gruppa.name, count(*)
+FROM lezgin_gruppa
+Inner Join lezgin_graduate ON lezgin_gruppa.gruppa_id = lezgin_graduate.gruppa_id
+Group By lezgin_gruppa.gruppa_id
+
+
+9\↓
+SELECT lezgin_teacher.*, lezgin_user.lastname, lezgin_user.firstname
+FROM lezgin_teacher
+INNER JOIN lezgin_user ON lezgin_teacher.user_id = lezgin_user.user_id
+LEFT JOIN lezgin_graduate ON (lezgin_teacher.user_id = lezgin_graduate.user_id)
+WHERE lezgin_graduate.graduate_id IS NULL
+
+
+10\↓
+SELECT lezgin_course.*
+FROM lezgin_course
+LEFT JOIN lezgin_graduate ON (lezgin_course.course_id = lezgin_graduate.course_id)
+WHERE lezgin_graduate.graduate_id IS NULL
+
+
+
+11\↓
+SELECT lezgin_special.*
+FROM lezgin_special
+LEFT JOIN lezgin_course ON (lezgin_special.special_id = lezgin_course.special_id)
+WHERE lezgin_course.course_id IS NULL
+
+
+запросы.txt
+
+
+Открыт файл "запросы.txt"
